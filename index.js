@@ -1,13 +1,15 @@
-var net = require('net');
-var protobuf = require('protobufjs');
+let fs = require('fs');
+let net = require('net');
+let protobuf = require('protobufjs');
+let config = JSON.parse(fs.readFileSync("./config.json", "UTF-8"));
 
-var root = protobuf.loadSync("models/request.proto");
-var Request = root.lookupType("ledmodule.Request");
+let root = protobuf.loadSync("models/request.proto");
+let Request = root.lookupType("ledmodule.Request");
 
-var socket = new net.Socket();
+let socket = new net.Socket();
 
-socket.connect("/tmp/test.sock", function(){
-    var object = {
+socket.connect(config.serverSocket, function(){
+    let object = {
         action: Request.getEnum("Action").TEXT,
         sender: "I bim 1 sender",
         textRequest: {
