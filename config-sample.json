@@ -1,0 +1,4 @@
+{
+  "serverSocket": "<YOUR-UNIX-SOCKET>",
+  "apiKey": "<YOUR-API-KEY>"
+}
