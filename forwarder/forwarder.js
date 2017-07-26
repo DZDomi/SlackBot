@@ -7,6 +7,7 @@ let config = require('../config.json');
 app.use(bodyParser.json());
 
 app.post('/slack', function(req, res){
+    console.log("Got request from slack:\n" + req.body);
     io.emit("slack", req.body);
     //Respond 200 Everything ok
     res.send();

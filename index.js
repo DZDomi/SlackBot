@@ -1,7 +1,7 @@
 let fs = require('fs');
 let net = require('net');
 let protobuf = require('protobufjs');
-let config = JSON.parse(fs.readFileSync("./config.json", "UTF-8"));
+let config = require("./config.json");
 
 let root = protobuf.loadSync("models/request.proto");
 let Request = root.lookupType("ledmodule.Request");
