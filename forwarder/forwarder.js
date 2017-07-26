@@ -1,8 +1,15 @@
 let app = require('express')();
+let bodyParser = require('body-parser');
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
+let config = require('../config.json');
 
-io.on('connection', function(client){
-    console.log(client);
+app.use(bodyParser.json());
+
+app.post('/slack', function(req, res){
+    io.emit("slack", req.body);
+    //Respond 200 Everything ok
+    res.send();
 });
-server.listen(3000);
+
+server.listen(config.port);

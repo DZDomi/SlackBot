@@ -1,4 +1,6 @@
 {
   "serverSocket": "<YOUR-UNIX-SOCKET>",
-  "apiKey": "<YOUR-API-KEY>"
+  "apiKey": "<YOUR-API-KEY>",
+  "ip": "<YOUR-SERVER-IP>",
+  "port": "<YOUR-SERVER-PORT>"
 }
