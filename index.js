@@ -25,7 +25,7 @@ function writeMessage(){
             text: 'Hello i am a text'
         }
     };
-    socket.write(Request.encode(object).finish());
+    sendObjectToSocket(object);
 }
 
 function writeGifMessage(message){
@@ -37,10 +37,14 @@ function writeGifMessage(message){
                 gif: data
             }
         };
-        let message = Request.encode(object).finish();
-        let buffer = new Buffer(4);
-        buffer.writeUInt32LE(message.length, 0);
-        socket.write(buffer);
-        socket.write(message);
+        sendObjectToSocket(object);
     });
+}
+
+function sendObjectToSocket(object){
+    let message = Request.encode(object).finish();
+    let buffer = new Buffer(4);
+    buffer.writeUInt32LE(message.length, 0);
+    socket.write(buffer);
+    socket.write(message);
 }
