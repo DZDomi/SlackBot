@@ -38,7 +38,7 @@ function writeGifMessage(message){
         };
         let message = Request.encode(object).finish();
         let buffer = new Buffer(4);
-        buffer.writeInt8(message.length, 0);
+        buffer.writeUInt32BE(message.length, 0);
         socket.write(buffer);
         socket.write(message);
     });
