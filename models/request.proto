@@ -24,9 +24,11 @@ message TextRequest {
 }
 
 message PictureRequest {
+
 }
 
 message GifRequest {
+    required bytes gif = 1;
 }
 
 message VideoRequest {
