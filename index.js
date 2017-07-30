@@ -9,6 +9,12 @@ let Request = root.lookupType("ledmodule.Request");
 let socket = new net.Socket();
 
 socket.connect(config.serverSocket, function(){
+    writeMessage();
+    setTimeout(writeMessage, 3000);
+    setTimeout(writeMessage, 5000);
+});
+
+function writeMessage(){
     let object = {
         action: Request.getEnum("Action").TEXT,
         sender: "I bim 1 sender",
@@ -17,4 +23,4 @@ socket.connect(config.serverSocket, function(){
         }
     };
     socket.write(Request.encode(object).finish() + "\n");
-});
+}
