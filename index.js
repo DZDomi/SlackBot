@@ -34,7 +34,7 @@ function writeGifMessage(message){
             action: Request.getEnum("Action").GIF,
             sender: "I bim 1 sender",
             gifRequest: {
-                gif: data
+                gif: data.toBuffer()
             }
         };
         sendObjectToSocket(object);
