@@ -24,7 +24,7 @@ function writeMessage(){
             text: 'Hello i am a text'
         }
     };
-    socket.write(Request.encode(object).finish() + "\n");
+    socket.write(Request.encode(object).finish());
 }
 
 function writeGifMessage(message){
@@ -37,6 +37,6 @@ function writeGifMessage(message){
             }
         };
         console.log(data);
-        socket.write(Request.encode(object).finish() + "\n");
+        socket.write(Request.encode(object).finish());
     });
 }
