@@ -11,9 +11,9 @@ let socket = new net.Socket();
 
 socket.connect(config.serverSocket, function(){
     writeGifMessage("Test");
-    writeMessage();
-    setTimeout(writeMessage, 3000);
-    setTimeout(writeMessage, 5000);
+    // writeMessage();
+    // setTimeout(writeMessage, 3000);
+    // setTimeout(writeMessage, 5000);
 });
 
 function writeMessage(){
