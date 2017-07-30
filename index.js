@@ -37,6 +37,9 @@ function writeGifMessage(message){
             }
         };
         console.log(data);
-        socket.write(Request.encode(object).finish());
+        let message = Request.encode(object).finish();
+        console.log(message.length);
+        socket.write(message.length);
+        socket.write(message);
     });
 }
