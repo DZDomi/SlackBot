@@ -30,7 +30,7 @@ function writeMessage(){
 function writeGifMessage(message){
     gif.downLoadGif(message, (data) => {
         let object = {
-            action: Request.getEnum("Action").TEXT,
+            action: Request.getEnum("Action").GIF,
             sender: "I bim 1 sender",
             gifRequest: {
                 gif: data
