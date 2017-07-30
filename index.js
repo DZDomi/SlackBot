@@ -36,10 +36,10 @@ function writeGifMessage(message){
                 gif: data
             }
         };
-        console.log(data);
         let message = Request.encode(object).finish();
-        console.log(message.length);
-        socket.write(message.length);
+        let buffer = new Buffer(4);
+        buffer.writeInt8(message.length, 0);
+        socket.write(buffer);
         socket.write(message);
     });
 }
