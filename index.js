@@ -26,7 +26,7 @@ function tryToReconnect(){
     if(socket.writable){
         return;
     }
-    socket.removeListener("connection");
+    socket.removeListener(socketConnected);
     logger.log("index", "Socket " + config.serverSocket + " disconnected. Trying to reconnect...");
     socket.connect(config.serverSocket, socketConnected);
 }
