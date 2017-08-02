@@ -11,16 +11,24 @@ let socket = new net.Socket();
 
 socket.connect(config.serverSocket, function(){
     client.onMessage((message) => {
+        switch (message.command){
+            case "/ledtext":
+                writeMessage(message);
+                break;
+            case "/ledgif":
+                writeGifMessage(message);
+                break;
+        }
         console.log(message);
     });
 });
 
-function writeMessage(){
+function writeMessage(message){
     let object = {
         action: Request.getEnum("Action").TEXT,
-        sender: "I bim 1 sender",
+        sender: message.user_name,
         textRequest: {
-            text: 'Hello i am a text'
+            text: message.text
         }
     };
     sendObjectToSocket(object);
@@ -30,7 +38,7 @@ function writeGifMessage(message){
     gif.downLoadGif(message, (data) => {
         let object = {
             action: Request.getEnum("Action").GIF,
-            sender: "I bim 1 sender",
+            sender: message.user_name,
             gifRequest: {
                 gif: data
             }
