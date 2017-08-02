@@ -7,7 +7,7 @@ let client = {};
 
 client.onMessage = function(callback){
     socket.on("slack", function(msg){
-        logger.log("client", "Got message from slack user: ", message.user_name);
+        logger.log("client", "Got message from slack user: ", msg.user_name);
         callback(msg);
     })
 };
