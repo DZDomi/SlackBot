@@ -4,5 +4,6 @@
   "ip": "<YOUR-SERVER-IP>",
   "port": "<YOUR-SERVER-PORT>",
   "debug": true,
-  "logFile": "bot.log"
+  "logFile": "bot.log",
+  "socketTimeout": 10000
 }

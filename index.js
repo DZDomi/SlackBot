@@ -11,14 +11,18 @@ let Request = root.lookupType("ledmodule.Request");
 let socket = new net.Socket();
 
 logger.log("index", "Starting listening on socket: " + config.serverSocket);
-
-socket.on("disconnect", () => {
-    logger.log("index", "Socket " + config.serverSocket + " disconnected. Trying to reconnect...");
-    //Try to reconnect to the socket
-    socket.connect(config.serverSocket, socketConnected);
-});
-
+socket.on("disconnect", tryToReconnect);
 socket.connect(config.serverSocket, socketConnected);
+
+function tryToReconnect(){
+    //Socket is writable no need to try to reconnect
+    if(socket.writable){
+        return;
+    }
+    logger.log("index", "Socket " + config.serverSocket + " disconnected. Trying to reconnect...");
+    socket.connect(config.serverSocket, socketConnected);
+    setTimeout(tryToReconnect, config.socketTimeout);
+}
 
 function socketConnected() {
     logger.log("index", "Established socket connection");
@@ -80,8 +84,14 @@ function sendObjectToSocket(object){
     let message = Request.encode(object).finish();
     let buffer = new Buffer(4);
     logger.log("index", "Writing message to socket");
-    buffer.writeUInt32LE(message.length, 0);
-    socket.write(buffer);
-    socket.write(message);
+    try {
+        buffer.writeUInt32LE(message.length, 0);
+        socket.write(buffer);
+        socket.write(message);
+    } catch (e){
+        logger.log("index", "Unable to write to socket: " + config.serverSocket);
+        tryToReconnect();
+        return;
+    }
     logger.log("index", "Finished writing message to socket");
 }
