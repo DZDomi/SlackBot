@@ -14,6 +14,11 @@ logger.log("index", "Starting listening on socket: " + config.serverSocket);
 socket.on("disconnect", tryToReconnect);
 socket.connect(config.serverSocket, socketConnected);
 
+socket.on("error", () => {
+    logger.log("index", "Unable to reconnect to socket: " + config.serverSocket + ". Trying again in " + config.socketTimeout/1000 + " seconds...");
+    setTimeout(tryToReconnect, config.socketTimeout);
+});
+
 function tryToReconnect(){
     //Socket is writable no need to try to reconnect
     if(socket.writable){
@@ -21,7 +26,6 @@ function tryToReconnect(){
     }
     logger.log("index", "Socket " + config.serverSocket + " disconnected. Trying to reconnect...");
     socket.connect(config.serverSocket, socketConnected);
-    setTimeout(tryToReconnect, config.socketTimeout);
 }
 
 function socketConnected() {
