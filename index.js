@@ -3,14 +3,19 @@ let protobuf = require('protobufjs');
 let gif = require('./util/gif');
 let config = require("./config.json");
 let client = require('./forwarder/client');
+let logger = require('./util/logger');
 
 let root = protobuf.loadSync("models/request.proto");
 let Request = root.lookupType("ledmodule.Request");
 
 let socket = new net.Socket();
 
+logger.log("index", "Starting listening on socket: " + config.serverSocket);
+
 socket.connect(config.serverSocket, function(){
+    logger.log("index", "Established socket connection");
     client.onMessage((message) => {
+        logger.log("index", "Received message from: " + message.user_name + " Message: " + message.command + " " + message.text);
         switch (message.command){
             case "/ledtext":
                 writeMessage(message);
@@ -21,8 +26,10 @@ socket.connect(config.serverSocket, function(){
             case "/ledcancel":
                 cancelAction(message);
                 break;
+            default:
+                logger.log("index", "Command: " + message.command + " not recognized");
+                break;
         }
-        console.log(message);
     });
 });
 
@@ -41,7 +48,6 @@ function writeMessage(message){
 function writeGifMessage(message){
     gif.downLoadGif(message.text, (err, data) => {
         if(err){
-            console.log(err);
             return;
         }
         let object = {
@@ -66,7 +72,9 @@ function cancelAction(message){
 function sendObjectToSocket(object){
     let message = Request.encode(object).finish();
     let buffer = new Buffer(4);
+    logger.log("index", "Writing message to socket");
     buffer.writeUInt32LE(message.length, 0);
     socket.write(buffer);
     socket.write(message);
+    logger.log("index", "Finished writing message to socket");
 }

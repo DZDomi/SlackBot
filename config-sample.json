@@ -2,5 +2,7 @@
   "serverSocket": "<YOUR-UNIX-SOCKET>",
   "apiKey": "<YOUR-API-KEY>",
   "ip": "<YOUR-SERVER-IP>",
-  "port": "<YOUR-SERVER-PORT>"
+  "port": "<YOUR-SERVER-PORT>",
+  "debug": true,
+  "logFile": "bot.log"
 }
