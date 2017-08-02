@@ -23,6 +23,8 @@ socket.connect(config.serverSocket, function(){
     });
 });
 
+
+
 function writeMessage(message){
     let object = {
         action: Request.getEnum("Action").TEXT,
@@ -35,7 +37,7 @@ function writeMessage(message){
 }
 
 function writeGifMessage(message){
-    gif.downLoadGif(message, (data) => {
+    gif.downLoadGif(message.text, (data) => {
         let object = {
             action: Request.getEnum("Action").GIF,
             sender: message.user_name,
