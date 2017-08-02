@@ -19,8 +19,8 @@ gif.downLoadGif = (text, callback) => {
         let start = now();
         download(selectedGif.images.original.url)
             .then((data) => {
-                let time = (start - now());
-                logger.log("gif", "Finished Downloading gif with id: " + selectedGif.id + ", took " + time);
+                let time = (now() - start).toFixed(0);
+                logger.log("gif", "Finished Downloading gif with id: " + selectedGif.id + ", took " + time + "ms");
                 callback(null, data)
             });
     });
