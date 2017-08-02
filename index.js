@@ -9,6 +9,7 @@ let root = protobuf.loadSync("models/request.proto");
 let Request = root.lookupType("ledmodule.Request");
 
 let socket = new net.Socket();
+let timeout;
 
 logger.log("index", "Starting listening on socket: " + config.serverSocket);
 socket.on("disconnect", tryToReconnect);
@@ -16,7 +17,8 @@ socket.connect(config.serverSocket, socketConnected);
 
 socket.on("error", () => {
     logger.log("index", "Unable to reconnect to socket: " + config.serverSocket + ". Trying again in " + config.socketTimeout/1000 + " seconds...");
-    setTimeout(tryToReconnect, config.socketTimeout);
+    clearTimeout(timeout);
+    timeout = setTimeout(tryToReconnect, config.socketTimeout);
 });
 
 function tryToReconnect(){
