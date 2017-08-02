@@ -27,7 +27,6 @@ socket.connect(config.serverSocket, function(){
 });
 
 
-
 function writeMessage(message){
     let object = {
         action: Request.getEnum("Action").TEXT,
@@ -40,7 +39,11 @@ function writeMessage(message){
 }
 
 function writeGifMessage(message){
-    gif.downLoadGif(message.text, (data) => {
+    gif.downLoadGif(message.text, (err, data) => {
+        if(err){
+            console.log(err);
+            return;
+        }
         let object = {
             action: Request.getEnum("Action").GIF,
             sender: message.user_name,
