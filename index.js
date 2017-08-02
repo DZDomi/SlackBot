@@ -1,8 +1,8 @@
-let fs = require('fs');
 let net = require('net');
 let protobuf = require('protobufjs');
 let gif = require('./util/gif');
 let config = require("./config.json");
+let client = require('./forwarder/client');
 
 let root = protobuf.loadSync("models/request.proto");
 let Request = root.lookupType("ledmodule.Request");
@@ -10,11 +10,9 @@ let Request = root.lookupType("ledmodule.Request");
 let socket = new net.Socket();
 
 socket.connect(config.serverSocket, function(){
-    writeGifMessage("Test");
-    // writeGifMessage("Another test");
-    // writeMessage();
-    // setTimeout(writeMessage, 3000);
-    // setTimeout(writeMessage, 5000);
+    client.onMessage((message) => {
+        console.log(message);
+    });
 });
 
 function writeMessage(){

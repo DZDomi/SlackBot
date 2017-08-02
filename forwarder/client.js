@@ -2,8 +2,12 @@ let io = require('socket.io-client');
 let config = require('../config.json');
 const socket = io('http://' + config.ip + ':' + config.port);
 
-socket.on('connect', () => {
+let client = {};
+
+client.onMessage = function(callback){
     socket.on("slack", function(msg){
-        console.log(msg);
+        callback(msg);
     })
-});
+};
+
+module.exports = client;
