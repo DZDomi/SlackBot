@@ -6,7 +6,7 @@ let config = require('../config.json');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/slack', function(req, res){
+app.post('/slack', (req, res) => {
     console.log("Got request from slack:\n" + req.body);
     io.emit("slack", req.body);
     //Respond 200 Everything ok

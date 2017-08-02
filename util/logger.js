@@ -3,7 +3,7 @@ let config = require('../config.json');
 
 let logger = {};
 
-logger.log = function(type, message){
+logger.log = (type, message) => {
     if(config.debug){
         let timestamp = new Date();
         let log = "[" + timestamp.toISOString() + "] " + type + ": " + message;

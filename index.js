@@ -12,7 +12,7 @@ let socket = new net.Socket();
 
 logger.log("index", "Starting listening on socket: " + config.serverSocket);
 
-socket.connect(config.serverSocket, function(){
+socket.connect(config.serverSocket, () => {
     logger.log("index", "Established socket connection");
     client.onMessage((message) => {
         logger.log("index", "Received message from: " + message.user_name + " Message: " + message.command + " " + message.text);

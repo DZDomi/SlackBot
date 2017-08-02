@@ -5,9 +5,9 @@ let logger = require('./logger');
 
 let gif = {};
 
-gif.downLoadGif = function(text, callback){
+gif.downLoadGif = (text, callback) => {
     logger.log("gif", "Searching for gif from phrase: " + text);
-    giphy.search(text, function(err, res){
+    giphy.search(text, (err, res) => {
         if(res.data.length === 0){
             logger.log("gif", "Unable to find gif from phrase: " + text);
             return callback(new Error("No gif found"));
