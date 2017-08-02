@@ -16,6 +16,7 @@
     "express": "^4.15.3",
     "giphy-api": "^1.2.6",
     "performance-now": "^2.1.0",
+    "prettysize": "^0.1.0",
     "protobufjs": "^6.8.0",
     "shuffle-array": "^1.0.1",
     "socket.io": "^2.0.3",
