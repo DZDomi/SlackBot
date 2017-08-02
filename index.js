@@ -12,11 +12,19 @@ let socket = new net.Socket();
 
 logger.log("index", "Starting listening on socket: " + config.serverSocket);
 
-socket.connect(config.serverSocket, () => {
+socket.on("disconnect", () => {
+    logger.log("index", "Socket " + config.serverSocket + " disconnected. Trying to reconnect...");
+    //Try to reconnect to the socket
+    socket.connect(config.serverSocket, socketConnected);
+});
+
+socket.connect(config.serverSocket, socketConnected);
+
+function socketConnected() {
     logger.log("index", "Established socket connection");
     client.onMessage((message) => {
         logger.log("index", "Received message from: " + message.user_name + " Message: " + message.command + " " + message.text);
-        switch (message.command){
+        switch (message.command) {
             case "/ledtext":
                 writeMessage(message);
                 break;
@@ -31,8 +39,7 @@ socket.connect(config.serverSocket, () => {
                 break;
         }
     });
-});
-
+}
 
 function writeMessage(message){
     let object = {
