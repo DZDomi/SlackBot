@@ -18,6 +18,9 @@ socket.connect(config.serverSocket, function(){
             case "/ledgif":
                 writeGifMessage(message);
                 break;
+            case "/ledcancel":
+                cancelAction(message);
+                break;
         }
         console.log(message);
     });
@@ -47,6 +50,14 @@ function writeGifMessage(message){
         };
         sendObjectToSocket(object);
     });
+}
+
+function cancelAction(message){
+    let object = {
+        action: Request.getEnum("Action").CANCEL,
+        sender: message.user_name
+    };
+    sendObjectToSocket(object);
 }
 
 function sendObjectToSocket(object){
