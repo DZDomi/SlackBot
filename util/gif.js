@@ -2,6 +2,7 @@ let giphy = require('giphy-api')();
 let download = require('download');
 let shuffle = require('shuffle-array');
 let logger = require('./logger');
+let now = require('performance-now');
 
 let gif = {};
 
@@ -15,9 +16,11 @@ gif.downLoadGif = (text, callback) => {
         shuffle(res.data);
         let selectedGif = res.data[0];
         logger.log("gif", "Starting to download gif with id: " + selectedGif.id);
+        let start = now();
         download(selectedGif.images.original.url)
             .then((data) => {
-                logger.log("gif", "Finished Downloading gif with id: " + selectedGif.id);
+                let time = (start - now());
+                logger.log("gif", "Finished Downloading gif with id: " + selectedGif.id + ", took " + time);
                 callback(null, data)
             });
     });
