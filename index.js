@@ -88,14 +88,8 @@ function sendObjectToSocket(object){
     let message = Request.encode(object).finish();
     let buffer = new Buffer(4);
     logger.log("index", "Writing message to socket");
-    try {
-        buffer.writeUInt32LE(message.length, 0);
-        socket.write(buffer);
-        socket.write(message);
-    } catch (e){
-        logger.log("index", "Unable to write to socket: " + config.serverSocket);
-        tryToReconnect();
-        return;
-    }
+    buffer.writeUInt32LE(message.length, 0);
+    socket.write(buffer);
+    socket.write(message);
     logger.log("index", "Finished writing message to socket");
 }
