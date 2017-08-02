@@ -8,7 +8,7 @@ logger.log = (type, message) => {
         let timestamp = new Date();
         let log = "[" + timestamp.toISOString() + "] " + type + ": " + message;
         console.log(log);
-        fs.appendFileSync(config.logFile, log);
+        fs.appendFileSync(config.logFile, log + '\n');
     }
 };
 
