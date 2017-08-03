@@ -21,7 +21,7 @@ gif.downLoadGif = (text, callback) => {
         logger.log("gif", "Found gif with id: " + selectedGif.id + ", took " + time + "ms");
         logger.log("gif", "Starting download of id: " + selectedGif.id);
         start = now();
-        download(selectedGif.images.original.url)
+        download("https://media2.giphy.com/media/cVG2i8kfmgETe/giphy.gif")
             .then((data) => {
                 time = (now() - start).toFixed(0);
                 logger.log("gif", "Finished Downloading gif with id: " + selectedGif.id + ", took " + time + "ms (" + pretty(data.length) + ")");
