@@ -33,7 +33,6 @@ gif.downLoadGif = (text, callback) => {
 
 function removeLargeGifs(data, size) {
     return data.filter((gif) => {
-        console.log(gif.images.original);
         return gif.images.original.size < size;
     });
 }
