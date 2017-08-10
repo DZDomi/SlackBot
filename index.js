@@ -11,8 +11,7 @@ let Request = root.lookupType("ledmodule.Request");
 let socket = new net.Socket();
 let timeout;
 
-logger.log("index", "Starting listening on socket: " + config.serverSocket);
-socket.on("disconnect", tryToReconnect);
+logger.log("index", "Trying to connect to socket: " + config.serverSocket);
 socket.connect(config.serverSocket, socketConnected);
 
 socket.on("error", () => {
@@ -33,7 +32,7 @@ function tryToReconnect(){
 }
 
 function socketConnected() {
-    logger.log("index", "Established socket connection");
+    logger.log("index", "Established socket connection to: " + config.serverSocket + ", start listening...");
     client.onMessage((message) => {
         logger.log("index", "Received message from: " + message.user_name + " Message: " + message.command + " " + message.text);
         switch (message.command) {
