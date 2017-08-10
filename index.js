@@ -17,8 +17,7 @@ socket.connect(config.serverSocket, socketConnected);
 socket.on("error", () => {
     logger.log("index", "Unable to reconnect to socket: " + config.serverSocket + ". Trying again in " + config.socketTimeout/1000 + " seconds...");
     clearTimeout(timeout);
-    //TODO: Makes this work
-    timeout = setTimeout(tryToReconnect, config.socketTimeout);
+    //timeout = setTimeout(tryToReconnect, config.socketTimeout);
 });
 
 function tryToReconnect(){
