@@ -44,6 +44,9 @@ function socketConnected() {
             case "/ledcancel":
                 cancelAction(message);
                 break;
+            case "/ledquote":
+                quoteCoindesk();
+                break;
             default:
                 logger.log("index", "Command: " + message.command + " not recognized");
                 break;
@@ -84,6 +87,30 @@ function cancelAction(message){
         sender: message.user_name
     };
     sendObjectToSocket(object);
+}
+
+function rateFormat(flt) {
+	// takes a float, returns a string
+	return flt.toFixed(2);
+}
+function logError(err) {
+    logger.log("index", "Error: " + err.message);
+}
+function quoteCoindesk()
+{
+	api_url = 'https://api.coindesk.com/v1/bpi/currentprice.json';
+	https.get(api_url, (response) => {
+		let data = '';
+		response.on('data', (chunk) => {
+			data += chunk;
+		});
+		response.on('end', () => {
+			jso = JSON.parse(data);
+			usd_rate = rateFormat(jso.bpi.USD.rate_float);
+			eur_rate = rateFormat(jso.bpi.EUR.rate_float);
+			writeMessage("USD:"+usd_rate+" EUR:"+eur_rate);
+		});
+	}).on("error", logError);
 }
 
 function sendObjectToSocket(object){
